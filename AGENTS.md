@@ -1,4 +1,4 @@
-# AGENTS.md instructions for /home/baron/corecoin/core_openzeppelin
+# AGENTS.md instructions for /home/baron/corecoin/core_openzeppelin_upgradeable
 
 <INSTRUCTIONS>
 ## Skills
@@ -27,27 +27,35 @@ A skill is a set of local instructions to follow that is stored in a `SKILL.md` 
 
 # Project context
 
-This repo ports OpenZeppelin to a custom blockchain. It uses the custom framework `spart` (a clone of Foundry/Forge). Build with `spark build`, and run tests with `spark test`.
+This repo ports OpenZeppelin Upgradeable to a custom blockchain. It uses the custom framework `spart` (a clone of Foundry/Forge). Build with `spark build`, and run tests with `spark test`.
 
-OpenZeppelin source and tests directories must remain unchanged:
-- `openzeppelin_contracts` and `openzeppelin_tests` are read-only references.
-- All ported logic lives under `src/` and all ported tests live under `test/`.
-- Files must mirror the OpenZeppelin folder structure under these destinations.
+Project directories and ownership:
+- `openzeppelin_contracts_upgradeable` and `openzeppelin_tests_upgradeable` are read-only references from upstream OpenZeppelin Upgradeable.
+- All ported upgradeable logic lives under `src/`.
+- All ported tests live under `test/`.
+- Preserve upstream folder structure when porting into `src/` and `test/`.
+- `core_openzeppelin` contains the already-ported non-upgradeable Core contracts from the previous project; use it as implementation reference while porting upgradeable variants.
+- `core_openzeppelin_tests` contains the already-ported non-upgradeable Core tests from the previous project; use it as the primary style/behavior reference when porting upgradeable tests.
+- If porting an upgradeable contract, first find and review the equivalent non-upgradeable Core implementation (usually in `core_openzeppelin`) to understand how the standard version was adapted before applying upgradeable-specific changes.
+- If porting upgradeable tests, first find and review the equivalent non-upgradeable Core tests (usually in `core_openzeppelin_tests`) and mirror their account setup patterns (e.g., `makeAddr`) to avoid Core precompile-address pitfalls.
+- For proxy test setup in this repo, use proxy helpers/mocks from `src/mocks/proxy` as the default local test proxy layer.
+
+Legacy note from old repo context:
+- Old source/test references (`openzeppelin_contracts`, `openzeppelin_tests`) are not the primary inputs in this repo; use the `_upgradeable` folders instead.
 
 This project is based on the Ylem compiler rather than Solidity. It may still use legacy names like `pragma solidity` or `keccak256`, but under the hood the compiler differs:
-
 - Pragmas should always be `pragma solidity ^1.1.2`.
 - Addresses are 22 bytes.
 - `keccak256` is implemented as SHA3-256 under the hood.
 - As a consequence, all Solidity function selectors (bytes4 of keccak256 of the signature) differ from Ethereum; any hardcoded selectors must be recomputed for Core.
 
-When porting tests from `openzeppelin_tests`, preserve the same folder structure under `test/` (create folders as needed).
+When porting tests from `openzeppelin_tests_upgradeable`, preserve the same folder structure under `test/` (create folders as needed).
 
-- OpenZeppelin porting notes:
+OpenZeppelin porting notes:
 - The OpenZeppelin `ECDSA` library is implemented as `EDDSA` in this codebase.
-- Core ERC20 tokens are called `CRC20` and should use `CRC20` in file names, contract names, and revert reasons.
-- Core ERC721 tokens are called `CRC721` and should use `CRC721` in file names, contract names, and revert reasons.
-- Core ERC1155 tokens are called `CRC1155` and should use `CRC1155` in file names, contract names, and revert reasons.
+- Core ERC20 tokens are called `CRC20` and should use `CRC20` in file names, contract names, and revert reasons (including upgradeable variants such as `CRC20Upgradeable`).
+- Core ERC721 tokens are called `CRC721` and should use `CRC721` in file names, contract names, and revert reasons (including upgradeable variants).
+- Core ERC1155 tokens are called `CRC1155` and should use `CRC1155` in file names, contract names, and revert reasons (including upgradeable variants).
 - Zero address policy:
   - There are two zero addresses: the real zero (`address(0)`) and the checksummed zero returned by `Checksum.zeroAddress()`.
   - In events like `Minted` and `Burned` where no real transfer appears, emit the real zero (`address(0)`).
@@ -58,7 +66,7 @@ Cryptography differences vs Ethereum:
 - Failed recovery hard reverts (burns 63/64 gas), instead of returning `address(0)` or a random address.
 - Signature length is fixed to 171 bytes; reject any other length (e.g., `InvalidSignatureLength`).
 - No exposed `(v, r, s)` tuple at the Solidity level; signatures are a single blob.
-- Signed-message prefix is `"\x19Core Signed Message:\n32"` (not Ethereum’s prefix).
+- Signed-message prefix is `"\x19Core Signed Message:\n32"` (not Ethereum's prefix).
 - Typed-data hashing keeps EIP-712 construction: `keccak256("\x19\x01" || domainSeparator || structHash)`.
 - Tooling must produce 171-byte signatures, use the Core prefix, and verify via two-arg `ecrecover`.
 
