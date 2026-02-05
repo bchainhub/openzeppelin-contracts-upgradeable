@@ -24,8 +24,9 @@ contract ProxyAdminUpgradeableTest is Test {
         _implementationV1 = new DummyImplementationUpgradeable();
         _implementationV2 = new DummyImplementationV2Upgradeable();
 
-        vm.prank(_proxyAdminOwner);
         _proxyAdmin = new ProxyAdminMock();
+        vm.prank(_proxyAdminOwner);
+        _proxyAdmin.initialize();
 
         vm.prank(_proxyAdminOwner);
         TransparentUpgradeableProxyMock proxy = new TransparentUpgradeableProxyMock(

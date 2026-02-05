@@ -39,7 +39,8 @@ contract BeaconProxyUpgradeableTest is Test {
     }
 
     function testNoInitialization() public {
-        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock(address(_implementationV0));
+        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock();
+        beacon.initialize(address(_implementationV0));
         uint256 balance = 10;
         BeaconProxyMock proxy = new BeaconProxyMock{value: balance}(address(beacon), "");
 
@@ -47,7 +48,8 @@ contract BeaconProxyUpgradeableTest is Test {
     }
 
     function testNonPayableInitialization() public {
-        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock(address(_implementationV0));
+        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock();
+        beacon.initialize(address(_implementationV0));
         bytes memory data = abi.encodeWithSignature("initializeNonPayableWithValue(uint256)", 55);
         BeaconProxyMock proxy = new BeaconProxyMock(address(beacon), data);
 
@@ -55,7 +57,8 @@ contract BeaconProxyUpgradeableTest is Test {
     }
 
     function testPayableInitialization() public {
-        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock(address(_implementationV0));
+        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock();
+        beacon.initialize(address(_implementationV0));
         bytes memory data = abi.encodeWithSignature("initializePayableWithValue(uint256)", 55);
         uint256 balance = 100;
         BeaconProxyMock proxy = new BeaconProxyMock{value: balance}(address(beacon), data);
@@ -64,14 +67,16 @@ contract BeaconProxyUpgradeableTest is Test {
     }
 
     function testRevertingInitialization() public {
-        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock(address(_implementationV0));
+        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock();
+        beacon.initialize(address(_implementationV0));
         bytes memory data = abi.encodeWithSignature("reverts()");
         vm.expectRevert(bytes("DummyImplementation reverted"));
         new BeaconProxyMock(address(beacon), data);
     }
 
     function testUpgradeProxyByUpgradingBeacon() public {
-        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock(address(_implementationV0));
+        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock();
+        beacon.initialize(address(_implementationV0));
 
         bytes memory data = abi.encodeWithSignature("initializeNonPayableWithValue(uint256)", 10);
         BeaconProxyMock proxy = new BeaconProxyMock(address(beacon), data);
@@ -85,7 +90,8 @@ contract BeaconProxyUpgradeableTest is Test {
     }
 
     function testUpgradeTwoProxiesByUpgradingBeacon() public {
-        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock(address(_implementationV0));
+        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock();
+        beacon.initialize(address(_implementationV0));
 
         bytes memory data1 = abi.encodeWithSignature("initializeNonPayableWithValue(uint256)", 10);
         BeaconProxyMock proxy1 = new BeaconProxyMock(address(beacon), data1);

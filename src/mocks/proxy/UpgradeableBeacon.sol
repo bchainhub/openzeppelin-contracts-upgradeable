@@ -4,27 +4,16 @@ pragma solidity ^1.1.2;
 
 import "../../proxy/beacon/IBeaconUpgradeable.sol";
 import "../../utils/AddressUpgradeable.sol";
+import "../../access/OwnableUpgradeable.sol";
 
-contract UpgradeableBeaconMock is IBeaconUpgradeable {
-    address private _owner;
+contract UpgradeableBeaconMock is IBeaconUpgradeable, OwnableUpgradeable {
     address private _implementation;
 
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
     event Upgraded(address indexed implementation);
 
-    modifier onlyOwner() {
-        require(msg.sender == _owner, "Ownable: caller is not the owner");
-        _;
-    }
-
-    constructor(address implementation_) {
-        _owner = msg.sender;
-        emit OwnershipTransferred(address(0), _owner);
+    function initialize(address implementation_) external initializer {
+        __Ownable_init();
         _setImplementation(implementation_);
-    }
-
-    function owner() public view returns (address) {
-        return _owner;
     }
 
     function implementation() public view virtual override returns (address) {

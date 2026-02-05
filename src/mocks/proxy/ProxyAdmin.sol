@@ -3,24 +3,11 @@
 pragma solidity ^1.1.2;
 
 import "./ITransparentUpgradeableProxy.sol";
+import "../../access/OwnableUpgradeable.sol";
 
-contract ProxyAdminMock {
-    address private _owner;
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
-    modifier onlyOwner() {
-        require(msg.sender == _owner, "Ownable: caller is not the owner");
-        _;
-    }
-
-    constructor() {
-        _owner = msg.sender;
-        emit OwnershipTransferred(address(0), _owner);
-    }
-
-    function owner() public view returns (address) {
-        return _owner;
+contract ProxyAdminMock is OwnableUpgradeable {
+    function initialize() external initializer {
+        __Ownable_init();
     }
 
     function getProxyImplementation(ITransparentUpgradeableProxyMock proxy) public view virtual returns (address) {

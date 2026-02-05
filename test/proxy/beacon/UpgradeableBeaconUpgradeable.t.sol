@@ -15,22 +15,26 @@ contract UpgradeableBeaconUpgradeableTest is Test {
     }
 
     function testCannotCreateWithNonContractImplementation() public {
+        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock();
+        vm.prank(_owner);
         vm.expectRevert(bytes("UpgradeableBeacon: implementation is not a contract"));
-        new UpgradeableBeaconMock(_other);
+        beacon.initialize(_other);
     }
 
     function testReturnsImplementation() public {
         Implementation1Upgradeable v1 = new Implementation1Upgradeable();
+        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock();
         vm.prank(_owner);
-        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock(address(v1));
+        beacon.initialize(address(v1));
         assertEq(beacon.implementation(), address(v1));
     }
 
     function testUpgradeByOwner() public {
         Implementation1Upgradeable v1 = new Implementation1Upgradeable();
         Implementation2Upgradeable v2 = new Implementation2Upgradeable();
+        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock();
         vm.prank(_owner);
-        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock(address(v1));
+        beacon.initialize(address(v1));
 
         vm.prank(_owner);
         beacon.upgradeTo(address(v2));
@@ -39,8 +43,9 @@ contract UpgradeableBeaconUpgradeableTest is Test {
 
     function testUpgradeToNonContractReverts() public {
         Implementation1Upgradeable v1 = new Implementation1Upgradeable();
+        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock();
         vm.prank(_owner);
-        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock(address(v1));
+        beacon.initialize(address(v1));
 
         vm.prank(_owner);
         vm.expectRevert(bytes("UpgradeableBeacon: implementation is not a contract"));
@@ -50,8 +55,9 @@ contract UpgradeableBeaconUpgradeableTest is Test {
     function testUpgradeByNonOwnerReverts() public {
         Implementation1Upgradeable v1 = new Implementation1Upgradeable();
         Implementation2Upgradeable v2 = new Implementation2Upgradeable();
+        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock();
         vm.prank(_owner);
-        UpgradeableBeaconMock beacon = new UpgradeableBeaconMock(address(v1));
+        beacon.initialize(address(v1));
 
         vm.prank(_other);
         vm.expectRevert(bytes("Ownable: caller is not the owner"));
