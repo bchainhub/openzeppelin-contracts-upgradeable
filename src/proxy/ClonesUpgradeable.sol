@@ -52,11 +52,11 @@ library ClonesUpgradeable {
     /**
      * @dev Computes the address of a clone deployed using {ClonesUpgradeable-cloneDeterministic}.
      */
-    function predictDeterministicAddress(
-        address implementation,
-        bytes32 salt,
-        address deployer
-    ) internal view returns (address predicted) {
+    function predictDeterministicAddress(address implementation, bytes32 salt, address deployer)
+        internal
+        view
+        returns (address predicted)
+    {
         bytes32 codeHash = keccak256(_cloneBytecode(implementation));
         return Create2Upgradeable.computeAddress(salt, codeHash, deployer);
     }
@@ -64,10 +64,11 @@ library ClonesUpgradeable {
     /**
      * @dev Computes the address of a clone deployed using {ClonesUpgradeable-cloneDeterministic}.
      */
-    function predictDeterministicAddress(
-        address implementation,
-        bytes32 salt
-    ) internal view returns (address predicted) {
+    function predictDeterministicAddress(address implementation, bytes32 salt)
+        internal
+        view
+        returns (address predicted)
+    {
         return predictDeterministicAddress(implementation, salt, address(this));
     }
 

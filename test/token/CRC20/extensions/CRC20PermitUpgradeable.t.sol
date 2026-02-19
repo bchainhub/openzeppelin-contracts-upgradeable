@@ -100,25 +100,18 @@ contract CRC20PermitUpgradeableTest is Test {
     }
 
     function _domainSeparator(address verifyingContract) private view returns (bytes32) {
-        return
-            keccak256(
-                abi.encode(
-                    DOMAIN_TYPEHASH,
-                    keccak256(bytes(_NAME)),
-                    keccak256(bytes(_VERSION)),
-                    block.chainid,
-                    verifyingContract
-                )
-            );
+        return keccak256(
+            abi.encode(
+                DOMAIN_TYPEHASH, keccak256(bytes(_NAME)), keccak256(bytes(_VERSION)), block.chainid, verifyingContract
+            )
+        );
     }
 
-    function _permitDigest(
-        address owner,
-        address spender,
-        uint256 value,
-        uint256 nonce,
-        uint256 deadline
-    ) private view returns (bytes32) {
+    function _permitDigest(address owner, address spender, uint256 value, uint256 nonce, uint256 deadline)
+        private
+        view
+        returns (bytes32)
+    {
         bytes32 structHash = keccak256(abi.encode(PERMIT_TYPEHASH, owner, spender, value, nonce, deadline));
         return EDDSAUpgradeable.toTypedDataHash(_domainSeparator(address(_token)), structHash);
     }

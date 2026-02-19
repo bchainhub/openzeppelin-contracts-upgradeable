@@ -7,8 +7,7 @@ import "../../../src/mocks/proxy/UUPSUpgradeableMockUpgradeable.sol";
 import "../../../src/mocks/proxy/UUPSLegacyUpgradeable.sol";
 
 contract UUPSUpgradeableTest is Test {
-    bytes32 private constant IMPLEMENTATION_SLOT =
-        0x169aa7877a62aec264f92a4c78812101abc42f65cbb20781a5cb4084c2d639d7;
+    bytes32 private constant IMPLEMENTATION_SLOT = 0x169aa7877a62aec264f92a4c78812101abc42f65cbb20781a5cb4084c2d639d7;
 
     event Upgraded(address indexed implementation);
 

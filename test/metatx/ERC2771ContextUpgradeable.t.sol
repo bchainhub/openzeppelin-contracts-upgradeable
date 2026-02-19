@@ -31,7 +31,12 @@ contract ERC2771ContextMockUpgradeable is ContextUpgradeable, ERC2771ContextUpgr
         return ERC2771ContextUpgradeable._msgSender();
     }
 
-    function _msgData() internal view override(ContextUpgradeable, ERC2771ContextUpgradeable) returns (bytes calldata) {
+    function _msgData()
+        internal
+        view
+        override(ContextUpgradeable, ERC2771ContextUpgradeable)
+        returns (bytes calldata)
+    {
         return ERC2771ContextUpgradeable._msgData();
     }
 
@@ -191,16 +196,15 @@ contract ERC2771ContextUpgradeableTest is Test {
     }
 
     function _domainSeparator() private view returns (bytes32) {
-        return
-            keccak256(
-                abi.encode(
-                    _DOMAIN_TYPEHASH,
-                    keccak256(bytes("MinimalForwarder")),
-                    keccak256(bytes("0.0.1")),
-                    block.chainid,
-                    address(_forwarder)
-                )
-            );
+        return keccak256(
+            abi.encode(
+                _DOMAIN_TYPEHASH,
+                keccak256(bytes("MinimalForwarder")),
+                keccak256(bytes("0.0.1")),
+                block.chainid,
+                address(_forwarder)
+            )
+        );
     }
 
     function _digest(MinimalForwarderUpgradeable.ForwardRequest memory req) private view returns (bytes32) {

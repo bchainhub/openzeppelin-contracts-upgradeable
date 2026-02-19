@@ -100,7 +100,11 @@ contract EnumerableMapUpgradeableMock {
         return _bytes32ToBytes32[mapId].get(key);
     }
 
-    function getBytes32ToBytes32(uint256 mapId, bytes32 key, string memory errorMessage) external view returns (bytes32) {
+    function getBytes32ToBytes32(uint256 mapId, bytes32 key, string memory errorMessage)
+        external
+        view
+        returns (bytes32)
+    {
         return _bytes32ToBytes32[mapId].get(key, errorMessage);
     }
 

@@ -65,9 +65,17 @@ contract CRC20UpgradeableTest is Test {
         _token.mint(_initialHolder, _INITIAL_SUPPLY);
     }
 
-    function testHasName() public { assertEq(_token.name(), _NAME); }
-    function testHasSymbol() public { assertEq(_token.symbol(), _SYMBOL); }
-    function testHas18Decimals() public { assertEq(_token.decimals(), 18); }
+    function testHasName() public {
+        assertEq(_token.name(), _NAME);
+    }
+
+    function testHasSymbol() public {
+        assertEq(_token.symbol(), _SYMBOL);
+    }
+
+    function testHas18Decimals() public {
+        assertEq(_token.decimals(), 18);
+    }
 
     function testCanSetDecimalsDuringInit() public {
         CRC20DecimalsUpgradeableMock token = new CRC20DecimalsUpgradeableMock();
@@ -75,9 +83,17 @@ contract CRC20UpgradeableTest is Test {
         assertEq(token.decimals(), 6);
     }
 
-    function testTotalSupply() public { assertEq(_token.totalSupply(), _INITIAL_SUPPLY); }
-    function testBalanceOfEmptyAccount() public { assertEq(_token.balanceOf(_anotherAccount), 0); }
-    function testBalanceOfHolder() public { assertEq(_token.balanceOf(_initialHolder), _INITIAL_SUPPLY); }
+    function testTotalSupply() public {
+        assertEq(_token.totalSupply(), _INITIAL_SUPPLY);
+    }
+
+    function testBalanceOfEmptyAccount() public {
+        assertEq(_token.balanceOf(_anotherAccount), 0);
+    }
+
+    function testBalanceOfHolder() public {
+        assertEq(_token.balanceOf(_initialHolder), _INITIAL_SUPPLY);
+    }
 
     function testTransferInsufficientBalance() public {
         vm.prank(_anotherAccount);

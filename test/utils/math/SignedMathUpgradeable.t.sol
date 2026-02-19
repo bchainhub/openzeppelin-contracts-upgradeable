@@ -30,13 +30,13 @@ contract SignedMathUpgradeableTest is Test {
     }
 
     function testMax() public {
-        assertEq(int(_math.max(5678, -1234)), int(5678));
-        assertEq(int(_math.max(-1234, 5678)), int(5678));
+        assertEq(int256(_math.max(5678, -1234)), int256(5678));
+        assertEq(int256(_math.max(-1234, 5678)), int256(5678));
     }
 
     function testMin() public {
-        assertEq(int(_math.min(-1234, 5678)), int(-1234));
-        assertEq(int(_math.min(5678, -1234)), int(-1234));
+        assertEq(int256(_math.min(-1234, 5678)), int256(-1234));
+        assertEq(int256(_math.min(5678, -1234)), int256(-1234));
     }
 
     function testAverage() public {
@@ -71,7 +71,7 @@ contract SignedMathUpgradeableTest is Test {
                 int256 x = valuesX[i];
                 int256 y = valuesY[j];
                 int256 expected = _averageExpected(x, y);
-                assertEq(int(_math.average(x, y)), int(expected));
+                assertEq(int256(_math.average(x, y)), int256(expected));
             }
         }
     }
@@ -80,13 +80,13 @@ contract SignedMathUpgradeableTest is Test {
         int256 min = type(int256).min;
         int256 max = type(int256).max;
 
-        assertEq(uint(_math.abs(min)), uint(_absExpected(min)));
-        assertEq(uint(_math.abs(min + 1)), uint(_absExpected(min + 1)));
-        assertEq(uint(_math.abs(-1)), uint(_absExpected(-1)));
-        assertEq(uint(_math.abs(0)), uint(_absExpected(0)));
-        assertEq(uint(_math.abs(1)), uint(_absExpected(1)));
-        assertEq(uint(_math.abs(max - 1)), uint(_absExpected(max - 1)));
-        assertEq(uint(_math.abs(max)), uint(_absExpected(max)));
+        assertEq(uint256(_math.abs(min)), uint256(_absExpected(min)));
+        assertEq(uint256(_math.abs(min + 1)), uint256(_absExpected(min + 1)));
+        assertEq(uint256(_math.abs(-1)), uint256(_absExpected(-1)));
+        assertEq(uint256(_math.abs(0)), uint256(_absExpected(0)));
+        assertEq(uint256(_math.abs(1)), uint256(_absExpected(1)));
+        assertEq(uint256(_math.abs(max - 1)), uint256(_absExpected(max - 1)));
+        assertEq(uint256(_math.abs(max)), uint256(_absExpected(max)));
     }
 
     function _averageExpected(int256 a, int256 b) private pure returns (int256) {

@@ -111,7 +111,8 @@ contract EIP712UpgradeableTest is Test {
     function _testHashTypedDataV4(string memory name, string memory version) private {
         EIP712VerifierUpgradeableMock eip712 = _deploy(name, version);
         bytes32 structHash = _mailStructHash(makeAddr("mailTo"), "very interesting");
-        bytes32 expected = EDDSAUpgradeable.toTypedDataHash(_domainSeparator(name, version, address(eip712)), structHash);
+        bytes32 expected =
+            EDDSAUpgradeable.toTypedDataHash(_domainSeparator(name, version, address(eip712)), structHash);
         assertEq(eip712.hashTypedDataV4(structHash), expected);
     }
 
@@ -133,13 +134,15 @@ contract EIP712UpgradeableTest is Test {
         return eip712;
     }
 
-    function _domainSeparator(
-        string memory name,
-        string memory version,
-        address verifyingContract
-    ) private view returns (bytes32) {
+    function _domainSeparator(string memory name, string memory version, address verifyingContract)
+        private
+        view
+        returns (bytes32)
+    {
         return keccak256(
-            abi.encode(DOMAIN_TYPEHASH, keccak256(bytes(name)), keccak256(bytes(version)), block.chainid, verifyingContract)
+            abi.encode(
+                DOMAIN_TYPEHASH, keccak256(bytes(name)), keccak256(bytes(version)), block.chainid, verifyingContract
+            )
         );
     }
 

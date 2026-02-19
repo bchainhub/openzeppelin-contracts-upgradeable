@@ -29,8 +29,7 @@ contract DummyImplementationProxyUpgradeable {
 }
 
 contract ERC1967ProxyUpgradeableTest is Test {
-    bytes32 private constant IMPLEMENTATION_SLOT =
-        0x169aa7877a62aec264f92a4c78812101abc42f65cbb20781a5cb4084c2d639d7;
+    bytes32 private constant IMPLEMENTATION_SLOT = 0x169aa7877a62aec264f92a4c78812101abc42f65cbb20781a5cb4084c2d639d7;
 
     DummyImplementationProxyUpgradeable private _implementation;
 
@@ -114,11 +113,9 @@ contract ERC1967ProxyUpgradeableTest is Test {
         return new ERC1967ProxyMock{value: value}(address(_implementation), data);
     }
 
-    function _assertProxyInitialization(
-        ERC1967ProxyMock proxy,
-        uint256 expectedValue,
-        uint256 expectedBalance
-    ) private {
+    function _assertProxyInitialization(ERC1967ProxyMock proxy, uint256 expectedValue, uint256 expectedBalance)
+        private
+    {
         bytes32 raw = vm.load(address(proxy), IMPLEMENTATION_SLOT);
         address impl = address(uint176(uint256(raw)));
         assertEq(impl, address(_implementation));

@@ -10,7 +10,7 @@ contract ReentrancyAttackUpgradeable is Initializable, ContextUpgradeable {
     function initialize() external initializer {}
 
     function callSender(bytes4 data) public {
-        (bool success, ) = _msgSender().call(abi.encodeWithSelector(data));
+        (bool success,) = _msgSender().call(abi.encodeWithSelector(data));
         require(success, "ReentrancyAttack: failed call");
     }
 }
@@ -37,7 +37,7 @@ contract ReentrancyMockUpgradeable is Initializable, ReentrancyGuardUpgradeable 
     function countThisRecursive(uint256 n) public nonReentrant {
         if (n > 0) {
             _count();
-            (bool success, ) = address(this).call(abi.encodeWithSignature("countThisRecursive(uint256)", n - 1));
+            (bool success,) = address(this).call(abi.encodeWithSignature("countThisRecursive(uint256)", n - 1));
             require(success, "ReentrancyMock: failed call");
         }
     }

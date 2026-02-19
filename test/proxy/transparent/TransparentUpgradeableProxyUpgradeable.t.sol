@@ -13,10 +13,8 @@ contract TransparentUpgradeableProxyUpgradeableTest is Test {
     event Upgraded(address indexed implementation);
     event AdminChanged(address previousAdmin, address newAdmin);
 
-    bytes32 private constant IMPLEMENTATION_SLOT =
-        0x169aa7877a62aec264f92a4c78812101abc42f65cbb20781a5cb4084c2d639d7;
-    bytes32 private constant ADMIN_SLOT =
-        0x5846d050da0e75d43b6055ae3cd6c2c65e1941ccb45afff84b891ff0c7a8e50e;
+    bytes32 private constant IMPLEMENTATION_SLOT = 0x169aa7877a62aec264f92a4c78812101abc42f65cbb20781a5cb4084c2d639d7;
+    bytes32 private constant ADMIN_SLOT = 0x5846d050da0e75d43b6055ae3cd6c2c65e1941ccb45afff84b891ff0c7a8e50e;
 
     address private _proxyAdminAddress;
     address private _proxyAdminOwner;
@@ -344,11 +342,10 @@ contract TransparentUpgradeableProxyUpgradeableTest is Test {
         assertEq(res, 0);
     }
 
-    function _createProxy(
-        address logic,
-        address admin,
-        bytes memory initData
-    ) private returns (ITransparentUpgradeableProxyMock) {
+    function _createProxy(address logic, address admin, bytes memory initData)
+        private
+        returns (ITransparentUpgradeableProxyMock)
+    {
         vm.prank(_proxyAdminOwner);
         TransparentUpgradeableProxyMock proxy = new TransparentUpgradeableProxyMock(logic, admin, initData);
         return ITransparentUpgradeableProxyMock(address(proxy));

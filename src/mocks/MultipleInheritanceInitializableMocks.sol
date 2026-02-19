@@ -80,12 +80,10 @@ contract SampleChild is Initializable, SampleMother, SampleFather {
         __SampleChild_init(_mother, _gramps, _father, _child);
     }
 
-    function __SampleChild_init(
-        uint256 _mother,
-        string memory _gramps,
-        uint256 _father,
-        uint256 _child
-    ) internal onlyInitializing {
+    function __SampleChild_init(uint256 _mother, string memory _gramps, uint256 _father, uint256 _child)
+        internal
+        onlyInitializing
+    {
         __SampleMother_init(_mother);
         __SampleFather_init(_gramps, _father);
         __SampleChild_init_unchained(_child);

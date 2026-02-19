@@ -21,12 +21,11 @@ contract MathUpgradeableHarness {
         return MathUpgradeable.ceilDiv(a, b);
     }
 
-    function mulDiv(
-        uint256 x,
-        uint256 y,
-        uint256 denominator,
-        MathUpgradeable.Rounding rounding
-    ) external pure returns (uint256) {
+    function mulDiv(uint256 x, uint256 y, uint256 denominator, MathUpgradeable.Rounding rounding)
+        external
+        pure
+        returns (uint256)
+    {
         return MathUpgradeable.mulDiv(x, y, denominator, rounding);
     }
 
@@ -125,10 +124,7 @@ contract MathUpgradeableTest is Test {
         assertEq(_math.sqrt(1000001, MathUpgradeable.Rounding.Down), 1000);
         assertEq(_math.sqrt(1002000, MathUpgradeable.Rounding.Down), 1000);
         assertEq(_math.sqrt(1002001, MathUpgradeable.Rounding.Down), 1001);
-        assertEq(
-            _math.sqrt(type(uint256).max, MathUpgradeable.Rounding.Down),
-            340282366920938463463374607431768211455
-        );
+        assertEq(_math.sqrt(type(uint256).max, MathUpgradeable.Rounding.Down), 340282366920938463463374607431768211455);
     }
 
     function testSqrtRoundsUp() public {
@@ -143,10 +139,7 @@ contract MathUpgradeableTest is Test {
         assertEq(_math.sqrt(1000001, MathUpgradeable.Rounding.Up), 1001);
         assertEq(_math.sqrt(1002000, MathUpgradeable.Rounding.Up), 1001);
         assertEq(_math.sqrt(1002001, MathUpgradeable.Rounding.Up), 1001);
-        assertEq(
-            _math.sqrt(type(uint256).max, MathUpgradeable.Rounding.Up),
-            340282366920938463463374607431768211456
-        );
+        assertEq(_math.sqrt(type(uint256).max, MathUpgradeable.Rounding.Up), 340282366920938463463374607431768211456);
     }
 
     function testLog2RoundsDown() public {

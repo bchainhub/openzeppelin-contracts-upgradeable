@@ -52,11 +52,7 @@ library Base64Upgradeable {
             mstore(afterPtr, 0x00)
 
             // Run over the input, 3 bytes at a time
-            for {
-
-            } lt(dataPtr, endPtr) {
-
-            } {
+            for {} lt(dataPtr, endPtr) {} {
                 // Advance 3 bytes
                 dataPtr := add(dataPtr, 3)
                 let input := mload(dataPtr)
@@ -91,9 +87,7 @@ library Base64Upgradeable {
                 mstore8(sub(resultPtr, 1), 0x3d)
                 mstore8(sub(resultPtr, 2), 0x3d)
             }
-            case 2 {
-                mstore8(sub(resultPtr, 1), 0x3d)
-            }
+            case 2 { mstore8(sub(resultPtr, 1), 0x3d) }
         }
 
         return result;
