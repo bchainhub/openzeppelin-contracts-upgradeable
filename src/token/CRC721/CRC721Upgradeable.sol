@@ -52,10 +52,8 @@ contract CRC721Upgradeable is
         override(ERC165Upgradeable, IERC165Upgradeable)
         returns (bool)
     {
-        return
-            interfaceId == type(ICRC721Upgradeable).interfaceId ||
-            interfaceId == type(ICRC721MetadataUpgradeable).interfaceId ||
-            super.supportsInterface(interfaceId);
+        return interfaceId == type(ICRC721Upgradeable).interfaceId
+            || interfaceId == type(ICRC721MetadataUpgradeable).interfaceId || super.supportsInterface(interfaceId);
     }
 
     function balanceOf(address owner) public view virtual override returns (uint256) {
@@ -128,10 +126,7 @@ contract CRC721Upgradeable is
 
     function _safeTransfer(address from, address to, uint256 tokenId, bytes memory data) internal virtual {
         _transfer(from, to, tokenId);
-        require(
-            _checkOnERC721Received(from, to, tokenId, data),
-            "CRC721: transfer to non CRC721Receiver implementer"
-        );
+        require(_checkOnERC721Received(from, to, tokenId, data), "CRC721: transfer to non CRC721Receiver implementer");
     }
 
     function _ownerOf(uint256 tokenId) internal view virtual returns (address) {
@@ -154,8 +149,7 @@ contract CRC721Upgradeable is
     function _safeMint(address to, uint256 tokenId, bytes memory data) internal virtual {
         _mint(to, tokenId);
         require(
-            _checkOnERC721Received(address(0), to, tokenId, data),
-            "CRC721: transfer to non CRC721Receiver implementer"
+            _checkOnERC721Received(address(0), to, tokenId, data), "CRC721: transfer to non CRC721Receiver implementer"
         );
     }
 
@@ -233,14 +227,14 @@ contract CRC721Upgradeable is
         require(_exists(tokenId), "CRC721: invalid token ID");
     }
 
-    function _checkOnERC721Received(
-        address from,
-        address to,
-        uint256 tokenId,
-        bytes memory data
-    ) private returns (bool) {
+    function _checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory data)
+        private
+        returns (bool)
+    {
         if (to.isContract()) {
-            try ICRC721ReceiverUpgradeable(to).onERC721Received(_msgSender(), from, tokenId, data) returns (bytes4 retval) {
+            try ICRC721ReceiverUpgradeable(to).onERC721Received(_msgSender(), from, tokenId, data) returns (
+                bytes4 retval
+            ) {
                 return retval == ICRC721ReceiverUpgradeable.onERC721Received.selector;
             } catch (bytes memory reason) {
                 if (reason.length == 0) {

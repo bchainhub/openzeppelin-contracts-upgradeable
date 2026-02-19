@@ -81,9 +81,8 @@ contract EDDSAUpgradeableTest is Test {
 
     function testToCoreSignedMessageHashBytes() public {
         bytes memory data = "abcd";
-        bytes32 expected = keccak256(
-            abi.encodePacked("\x19Core Signed Message:\n", StringsUpgradeable.toString(data.length), data)
-        );
+        bytes32 expected =
+            keccak256(abi.encodePacked("\x19Core Signed Message:\n", StringsUpgradeable.toString(data.length), data));
         assertEq(_eddsa.toCoreSignedMessageHashBytes(data), expected);
     }
 

@@ -18,24 +18,23 @@ library SignatureCheckerUpgradeable {
      */
     function isValidSignatureNow(address signer, bytes32 hash, bytes memory signature) internal view returns (bool) {
         (address recovered, EDDSAUpgradeable.RecoverError error) = EDDSAUpgradeable.tryRecover(hash, signature);
-        return
-            (error == EDDSAUpgradeable.RecoverError.NoError && recovered == signer) ||
-            isValidERC1271SignatureNow(signer, hash, signature);
+        return (error == EDDSAUpgradeable.RecoverError.NoError && recovered == signer)
+            || isValidERC1271SignatureNow(signer, hash, signature);
     }
 
     /**
      * @dev Checks if a signature is valid for a given signer and data hash using ERC1271.
      */
-    function isValidERC1271SignatureNow(
-        address signer,
-        bytes32 hash,
-        bytes memory signature
-    ) internal view returns (bool) {
-        (bool success, bytes memory result) = signer.staticcall(
-            abi.encodeWithSelector(IERC1271Upgradeable.isValidSignature.selector, hash, signature)
+    function isValidERC1271SignatureNow(address signer, bytes32 hash, bytes memory signature)
+        internal
+        view
+        returns (bool)
+    {
+        (bool success, bytes memory result) =
+            signer.staticcall(abi.encodeWithSelector(IERC1271Upgradeable.isValidSignature.selector, hash, signature));
+        return (
+            success && result.length >= 32
+                && abi.decode(result, (bytes32)) == bytes32(IERC1271Upgradeable.isValidSignature.selector)
         );
-        return (success &&
-            result.length >= 32 &&
-            abi.decode(result, (bytes32)) == bytes32(IERC1271Upgradeable.isValidSignature.selector));
     }
 }

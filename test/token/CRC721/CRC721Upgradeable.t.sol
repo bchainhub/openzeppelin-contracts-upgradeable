@@ -97,7 +97,9 @@ contract CRC721UpgradeableTest is Test {
         assertFalse(_token.supportsInterface(0xffffffff));
     }
 
-    function testBalanceOfOwner() public { assertEq(_token.balanceOf(_owner), 2); }
+    function testBalanceOfOwner() public {
+        assertEq(_token.balanceOf(_owner), 2);
+    }
 
     function testBalanceOfZeroReverts() public {
         vm.expectRevert(bytes("CRC721: address zero is not a valid owner"));
@@ -109,7 +111,9 @@ contract CRC721UpgradeableTest is Test {
         _token.balanceOf(ChecksumUpgradeable.zeroAddress());
     }
 
-    function testOwnerOf() public { assertEq(_token.ownerOf(_FIRST_TOKEN), _owner); }
+    function testOwnerOf() public {
+        assertEq(_token.ownerOf(_FIRST_TOKEN), _owner);
+    }
 
     function testOwnerOfInvalidReverts() public {
         vm.expectRevert(bytes("CRC721: invalid token ID"));

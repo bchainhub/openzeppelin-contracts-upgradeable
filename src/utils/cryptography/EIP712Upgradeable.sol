@@ -96,15 +96,7 @@ abstract contract EIP712Upgradeable is Initializable, IERC5267Upgradeable {
     {
         require(_hashedName == 0 && _hashedVersion == 0, "EIP712: Uninitialized");
 
-        return (
-            hex"0f",
-            _EIP712Name(),
-            _EIP712Version(),
-            block.chainid,
-            address(this),
-            bytes32(0),
-            new uint256[](0)
-        );
+        return (hex"0f", _EIP712Name(), _EIP712Version(), block.chainid, address(this), bytes32(0), new uint256[](0));
     }
 
     /**

@@ -74,12 +74,11 @@ library MerkleProofUpgradeable {
      *
      * _Available since v4.7._
      */
-    function multiProofVerify(
-        bytes32[] memory proof,
-        bool[] memory proofFlags,
-        bytes32 root,
-        bytes32[] memory leaves
-    ) internal pure returns (bool) {
+    function multiProofVerify(bytes32[] memory proof, bool[] memory proofFlags, bytes32 root, bytes32[] memory leaves)
+        internal
+        pure
+        returns (bool)
+    {
         return processMultiProof(proof, proofFlags, leaves) == root;
     }
 
@@ -111,11 +110,11 @@ library MerkleProofUpgradeable {
      *
      * _Available since v4.7._
      */
-    function processMultiProof(
-        bytes32[] memory proof,
-        bool[] memory proofFlags,
-        bytes32[] memory leaves
-    ) internal pure returns (bytes32 merkleRoot) {
+    function processMultiProof(bytes32[] memory proof, bool[] memory proofFlags, bytes32[] memory leaves)
+        internal
+        pure
+        returns (bytes32 merkleRoot)
+    {
         uint256 leavesLen = leaves.length;
         uint256 proofLen = proof.length;
         uint256 totalHashes = proofFlags.length;
@@ -128,9 +127,8 @@ library MerkleProofUpgradeable {
         uint256 proofPos = 0;
         for (uint256 i = 0; i < totalHashes; i++) {
             bytes32 a = leafPos < leavesLen ? leaves[leafPos++] : hashes[hashPos++];
-            bytes32 b = proofFlags[i]
-                ? (leafPos < leavesLen ? leaves[leafPos++] : hashes[hashPos++])
-                : proof[proofPos++];
+            bytes32 b =
+                proofFlags[i] ? (leafPos < leavesLen ? leaves[leafPos++] : hashes[hashPos++]) : proof[proofPos++];
             hashes[i] = _hashPair(a, b);
         }
 
@@ -153,11 +151,11 @@ library MerkleProofUpgradeable {
      *
      * _Available since v4.7._
      */
-    function processMultiProofCalldata(
-        bytes32[] calldata proof,
-        bool[] calldata proofFlags,
-        bytes32[] memory leaves
-    ) internal pure returns (bytes32 merkleRoot) {
+    function processMultiProofCalldata(bytes32[] calldata proof, bool[] calldata proofFlags, bytes32[] memory leaves)
+        internal
+        pure
+        returns (bytes32 merkleRoot)
+    {
         uint256 leavesLen = leaves.length;
         uint256 proofLen = proof.length;
         uint256 totalHashes = proofFlags.length;
@@ -170,9 +168,8 @@ library MerkleProofUpgradeable {
         uint256 proofPos = 0;
         for (uint256 i = 0; i < totalHashes; i++) {
             bytes32 a = leafPos < leavesLen ? leaves[leafPos++] : hashes[hashPos++];
-            bytes32 b = proofFlags[i]
-                ? (leafPos < leavesLen ? leaves[leafPos++] : hashes[hashPos++])
-                : proof[proofPos++];
+            bytes32 b =
+                proofFlags[i] ? (leafPos < leavesLen ? leaves[leafPos++] : hashes[hashPos++]) : proof[proofPos++];
             hashes[i] = _hashPair(a, b);
         }
 

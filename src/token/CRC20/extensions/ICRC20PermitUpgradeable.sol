@@ -7,13 +7,7 @@ pragma solidity ^1.1.2;
  * @dev Interface of the CRC20 Permit extension allowing approvals to be made via signatures.
  */
 interface ICRC20PermitUpgradeable {
-    function permit(
-        address owner,
-        address spender,
-        uint256 value,
-        uint256 deadline,
-        bytes memory signature
-    ) external;
+    function permit(address owner, address spender, uint256 value, uint256 deadline, bytes memory signature) external;
 
     function nonces(address owner) external view returns (uint256);
 

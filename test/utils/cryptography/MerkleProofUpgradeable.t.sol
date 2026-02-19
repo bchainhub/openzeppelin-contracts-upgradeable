@@ -13,12 +13,11 @@ contract MerkleProofUpgradeableHarness {
         return MerkleProofUpgradeable.verifyCalldata(proof, root, leaf);
     }
 
-    function multiProofVerify(
-        bytes32[] memory proof,
-        bool[] memory proofFlags,
-        bytes32 root,
-        bytes32[] memory leaves
-    ) external pure returns (bool) {
+    function multiProofVerify(bytes32[] memory proof, bool[] memory proofFlags, bytes32 root, bytes32[] memory leaves)
+        external
+        pure
+        returns (bool)
+    {
         return MerkleProofUpgradeable.multiProofVerify(proof, proofFlags, root, leaves);
     }
 
@@ -343,18 +342,20 @@ contract MerkleProofUpgradeableTest is Test {
         }
     }
 
-    function _getMultiProof(
-        bytes32[][] memory layers,
-        bool[] memory selectedLeaves
-    ) private pure returns (bytes32[] memory proof, bool[] memory flags, bytes32[] memory proofLeaves) {
+    function _getMultiProof(bytes32[][] memory layers, bool[] memory selectedLeaves)
+        private
+        pure
+        returns (bytes32[] memory proof, bool[] memory flags, bytes32[] memory proofLeaves)
+    {
         proofLeaves = _collectSelectedLeaves(layers[0], selectedLeaves);
         (proof, flags) = _buildProofAndFlags(layers, selectedLeaves);
     }
 
-    function _collectSelectedLeaves(
-        bytes32[] memory leaves,
-        bool[] memory selectedLeaves
-    ) private pure returns (bytes32[] memory proofLeaves) {
+    function _collectSelectedLeaves(bytes32[] memory leaves, bool[] memory selectedLeaves)
+        private
+        pure
+        returns (bytes32[] memory proofLeaves)
+    {
         uint256 count = 0;
         for (uint256 i = 0; i < leaves.length; i++) {
             if (selectedLeaves[i]) {
@@ -371,10 +372,11 @@ contract MerkleProofUpgradeableTest is Test {
         }
     }
 
-    function _buildProofAndFlags(
-        bytes32[][] memory layers,
-        bool[] memory selectedLeaves
-    ) private pure returns (bytes32[] memory proof, bool[] memory flags) {
+    function _buildProofAndFlags(bytes32[][] memory layers, bool[] memory selectedLeaves)
+        private
+        pure
+        returns (bytes32[] memory proof, bool[] memory flags)
+    {
         uint256 leavesLen = layers[0].length;
         bytes32[] memory proofTemp = new bytes32[](leavesLen * 2);
         bool[] memory flagsTemp = new bool[](leavesLen * 2);
@@ -383,14 +385,8 @@ contract MerkleProofUpgradeableTest is Test {
 
         bool[] memory selected = selectedLeaves;
         for (uint256 level = 0; level < layers.length - 1; level++) {
-            (selected, proofLen, flagLen) = _processLevel(
-                layers[level],
-                selected,
-                proofTemp,
-                flagsTemp,
-                proofLen,
-                flagLen
-            );
+            (selected, proofLen, flagLen) =
+                _processLevel(layers[level], selected, proofTemp, flagsTemp, proofLen, flagLen);
         }
 
         proof = _trimBytes32(proofTemp, proofLen);
@@ -444,7 +440,11 @@ contract MerkleProofUpgradeableTest is Test {
         }
     }
 
-    function _selectLeaves(bytes32[] memory leaves, bytes32[] memory proofLeaves) private pure returns (bool[] memory) {
+    function _selectLeaves(bytes32[] memory leaves, bytes32[] memory proofLeaves)
+        private
+        pure
+        returns (bool[] memory)
+    {
         bool[] memory selected = new bool[](leaves.length);
         for (uint256 i = 0; i < leaves.length; i++) {
             for (uint256 j = 0; j < proofLeaves.length; j++) {

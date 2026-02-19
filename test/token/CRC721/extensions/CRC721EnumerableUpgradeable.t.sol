@@ -51,9 +51,13 @@ contract CRC721EnumerableUpgradeableTest is Test {
         assertTrue(_token.supportsInterface(erc721EnumerableId));
     }
 
-    function testTotalSupply() public { assertEq(_token.totalSupply(), 2); }
+    function testTotalSupply() public {
+        assertEq(_token.totalSupply(), 2);
+    }
 
-    function testTokenOfOwnerByIndex() public { assertEq(_token.tokenOfOwnerByIndex(_owner, 0), _FIRST_TOKEN); }
+    function testTokenOfOwnerByIndex() public {
+        assertEq(_token.tokenOfOwnerByIndex(_owner, 0), _FIRST_TOKEN);
+    }
 
     function testTokenOfOwnerByIndexOutOfBoundsReverts() public {
         vm.expectRevert(bytes("CRC721Enumerable: owner index out of bounds"));

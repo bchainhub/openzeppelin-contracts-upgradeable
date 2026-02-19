@@ -40,9 +40,7 @@ library ChecksumUpgradeable {
 
         uint8 checkBcd = _toBcd2(check);
 
-        uint176 out = (uint176(prefix) << 168)
-            | (uint176(checkBcd) << 160)
-            | uint176(rawAddress);
+        uint176 out = (uint176(prefix) << 168) | (uint176(checkBcd) << 160) | uint176(rawAddress);
 
         return address(out);
     }

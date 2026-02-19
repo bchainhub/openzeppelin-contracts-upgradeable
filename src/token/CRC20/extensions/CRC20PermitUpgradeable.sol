@@ -47,13 +47,11 @@ abstract contract CRC20PermitUpgradeable is
     /**
      * @inheritdoc ICRC20PermitUpgradeable
      */
-    function permit(
-        address owner,
-        address spender,
-        uint256 value,
-        uint256 deadline,
-        bytes memory signature
-    ) public virtual override {
+    function permit(address owner, address spender, uint256 value, uint256 deadline, bytes memory signature)
+        public
+        virtual
+        override
+    {
         require(block.timestamp <= deadline, "CRC20Permit: expired deadline");
 
         bytes32 structHash = keccak256(abi.encode(_PERMIT_TYPEHASH, owner, spender, value, _useNonce(owner), deadline));

@@ -30,11 +30,12 @@ contract ProxyAdminMock is OwnableUpgradeable {
         proxy.upgradeTo(implementation);
     }
 
-    function upgradeAndCall(
-        ITransparentUpgradeableProxyMock proxy,
-        address implementation,
-        bytes memory data
-    ) public payable virtual onlyOwner {
+    function upgradeAndCall(ITransparentUpgradeableProxyMock proxy, address implementation, bytes memory data)
+        public
+        payable
+        virtual
+        onlyOwner
+    {
         proxy.upgradeToAndCall{value: msg.value}(implementation, data);
     }
 }

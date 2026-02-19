@@ -8,8 +8,7 @@ import "../../../src/mocks/DummyImplementation.sol";
 import "../../../src/mocks/proxy/BadBeacon.sol";
 
 contract BeaconProxyUpgradeableTest is Test {
-    bytes32 private constant BEACON_SLOT =
-        0x79d0e26f0ed6a26bf96d37944c615e11aedbfafe56e064339e13dad9525cda31;
+    bytes32 private constant BEACON_SLOT = 0x79d0e26f0ed6a26bf96d37944c615e11aedbfafe56e064339e13dad9525cda31;
 
     address private _anotherAccount;
     DummyImplementationUpgradeable private _implementationV0;
@@ -111,12 +110,9 @@ contract BeaconProxyUpgradeableTest is Test {
         assertEq(dummy2.version(), "V2");
     }
 
-    function _assertInitialized(
-        BeaconProxyMock proxy,
-        UpgradeableBeaconMock beacon,
-        uint256 value,
-        uint256 balance
-    ) private {
+    function _assertInitialized(BeaconProxyMock proxy, UpgradeableBeaconMock beacon, uint256 value, uint256 balance)
+        private
+    {
         bytes32 beaconSlot = vm.load(address(proxy), BEACON_SLOT);
         address beaconAddress = address(uint176(uint256(beaconSlot)));
         assertEq(beaconAddress, address(beacon));

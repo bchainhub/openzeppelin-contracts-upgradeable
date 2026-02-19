@@ -48,14 +48,10 @@ contract ERC1967UpgradeUpgradeableHarness is ERC1967UpgradeUpgradeable {
 }
 
 contract ERC1967UpgradeUpgradeableTest is Test {
-    bytes32 private constant IMPLEMENTATION_SLOT =
-        0x169aa7877a62aec264f92a4c78812101abc42f65cbb20781a5cb4084c2d639d7;
-    bytes32 private constant ADMIN_SLOT =
-        0x5846d050da0e75d43b6055ae3cd6c2c65e1941ccb45afff84b891ff0c7a8e50e;
-    bytes32 private constant BEACON_SLOT =
-        0x79d0e26f0ed6a26bf96d37944c615e11aedbfafe56e064339e13dad9525cda31;
-    bytes32 private constant ROLLBACK_SLOT =
-        0x9918ff29762f88fdc924c0a0ba5589b288a6baef366b4981f9a6f4309baada55;
+    bytes32 private constant IMPLEMENTATION_SLOT = 0x169aa7877a62aec264f92a4c78812101abc42f65cbb20781a5cb4084c2d639d7;
+    bytes32 private constant ADMIN_SLOT = 0x5846d050da0e75d43b6055ae3cd6c2c65e1941ccb45afff84b891ff0c7a8e50e;
+    bytes32 private constant BEACON_SLOT = 0x79d0e26f0ed6a26bf96d37944c615e11aedbfafe56e064339e13dad9525cda31;
+    bytes32 private constant ROLLBACK_SLOT = 0x9918ff29762f88fdc924c0a0ba5589b288a6baef366b4981f9a6f4309baada55;
 
     DummyImplementationERC1967Upgradeable private _implementation;
 
@@ -175,11 +171,9 @@ contract ERC1967UpgradeUpgradeableTest is Test {
         return new ERC1967ProxyMock{value: value}(address(_implementation), data);
     }
 
-    function _assertProxyInitialization(
-        ERC1967ProxyMock proxy,
-        uint256 expectedValue,
-        uint256 expectedBalance
-    ) private {
+    function _assertProxyInitialization(ERC1967ProxyMock proxy, uint256 expectedValue, uint256 expectedBalance)
+        private
+    {
         bytes32 raw = vm.load(address(proxy), IMPLEMENTATION_SLOT);
         address impl = address(uint176(uint256(raw)));
         assertEq(impl, address(_implementation));

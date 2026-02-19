@@ -22,24 +22,26 @@ contract AddressUpgradeableHarness {
         return AddressUpgradeable.functionCall(target, data);
     }
 
-    function functionCallError(
-        address target,
-        bytes memory data,
-        string memory errorMessage
-    ) external returns (bytes memory) {
+    function functionCallError(address target, bytes memory data, string memory errorMessage)
+        external
+        returns (bytes memory)
+    {
         return AddressUpgradeable.functionCall(target, data, errorMessage);
     }
 
-    function functionCallWithValue(address target, bytes memory data, uint256 value) external payable returns (bytes memory) {
+    function functionCallWithValue(address target, bytes memory data, uint256 value)
+        external
+        payable
+        returns (bytes memory)
+    {
         return AddressUpgradeable.functionCallWithValue(target, data, value);
     }
 
-    function functionCallWithValueError(
-        address target,
-        bytes memory data,
-        uint256 value,
-        string memory errorMessage
-    ) external payable returns (bytes memory) {
+    function functionCallWithValueError(address target, bytes memory data, uint256 value, string memory errorMessage)
+        external
+        payable
+        returns (bytes memory)
+    {
         return AddressUpgradeable.functionCallWithValue(target, data, value, errorMessage);
     }
 
@@ -47,11 +49,11 @@ contract AddressUpgradeableHarness {
         return AddressUpgradeable.functionStaticCall(target, data);
     }
 
-    function functionStaticCallError(
-        address target,
-        bytes memory data,
-        string memory errorMessage
-    ) external view returns (bytes memory) {
+    function functionStaticCallError(address target, bytes memory data, string memory errorMessage)
+        external
+        view
+        returns (bytes memory)
+    {
         return AddressUpgradeable.functionStaticCall(target, data, errorMessage);
     }
 
@@ -59,15 +61,18 @@ contract AddressUpgradeableHarness {
         return AddressUpgradeable.functionDelegateCall(target, data);
     }
 
-    function functionDelegateCallError(
-        address target,
-        bytes memory data,
-        string memory errorMessage
-    ) external returns (bytes memory) {
+    function functionDelegateCallError(address target, bytes memory data, string memory errorMessage)
+        external
+        returns (bytes memory)
+    {
         return AddressUpgradeable.functionDelegateCall(target, data, errorMessage);
     }
 
-    function verifyCallResult(bool success, bytes memory returndata, string memory errorMessage) external pure returns (bytes memory) {
+    function verifyCallResult(bool success, bytes memory returndata, string memory errorMessage)
+        external
+        pure
+        returns (bytes memory)
+    {
         return AddressUpgradeable.verifyCallResult(success, returndata, errorMessage);
     }
 
@@ -134,7 +139,7 @@ contract CallReceiverMockUpgradeable {
     }
 
     function mockFunctionOutOfGas() external {
-        for (uint256 i = 0; ; ++i) {
+        for (uint256 i = 0;; ++i) {
             _array.push(i);
         }
     }
