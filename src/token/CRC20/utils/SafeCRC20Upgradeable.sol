@@ -117,10 +117,7 @@ library SafeCRC20Upgradeable {
         // we're implementing it ourselves. We use {AddressUpgradeable-functionCall} to perform this call, which verifies
         // that the target address contains contract code and also asserts for success in the low-level call.
         bytes memory returndata = address(token).functionCall(data, "SafeCRC20: low-level call failed");
-        require(
-            returndata.length == 0 || abi.decode(returndata, (bool)),
-            "SafeCRC20: CRC20 operation did not succeed"
-        );
+        require(returndata.length == 0 || abi.decode(returndata, (bool)), "SafeCRC20: CRC20 operation did not succeed");
     }
 
     /**
@@ -135,9 +132,7 @@ library SafeCRC20Upgradeable {
         // We cannot use {AddressUpgradeable-functionCall} here since this should return false
         // and not revert if the subcall reverts.
         (bool success, bytes memory returndata) = address(token).call(data);
-        return
-            success &&
-            (returndata.length == 0 || abi.decode(returndata, (bool))) &&
-            AddressUpgradeable.isContract(address(token));
+        return success && (returndata.length == 0 || abi.decode(returndata, (bool)))
+            && AddressUpgradeable.isContract(address(token));
     }
 }
