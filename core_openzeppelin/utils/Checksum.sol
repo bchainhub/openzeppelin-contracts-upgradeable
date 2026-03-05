@@ -5,7 +5,15 @@ pragma solidity ^1.1.0;
 
 library Checksum {
     function zeroAddress() internal view returns (address) {
-        return toIcan(uint160(0));
+        uint8 chainId = _getChainId();
+
+        if (chainId == 1) {
+            return address(0xcb540000000000000000000000000000000000000000);
+        } else if (chainId == 3) {
+            return address(0xab720000000000000000000000000000000000000000);
+        } else {
+            return address(0xce450000000000000000000000000000000000000000);
+        }
     }
 
     function isValid(address addr) internal pure returns (bool) {
