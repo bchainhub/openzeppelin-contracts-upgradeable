@@ -81,3 +81,4 @@ Transparent proxy selector differences (keccak256 = SHA3-256):
 - `implementation()` selector: `0xf5d97006` (Ethereum keccak selector is different)
 - ERC1271 `isValidSignature(bytes32,bytes)` selector: `0x95f9a59b` (Ethereum keccak selector is different)
 - ERC165 `supportsInterface(bytes4)` selector: `0x80ada41b` (Ethereum keccak selector is different)
+- `Panic(uint256)` selector: `0x4b1f2ce3` (Ethereum/Solidity panic selector `0x4e487b71` is different)

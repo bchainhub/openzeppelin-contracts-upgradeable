@@ -114,4 +114,40 @@ library ArraysUpgradeable {
         }
         return slot.getUint256Slot();
     }
+
+    /**
+     * @dev Set the length of an array, without clearing or initializing the content.
+     *
+     * WARNING: This does not clear truncated elements or initialize newly exposed elements.
+     */
+    function unsafeSetLength(address[] storage array, uint256 len) internal {
+        /// @solidity memory-safe-assembly
+        assembly {
+            sstore(array.slot, len)
+        }
+    }
+
+    /**
+     * @dev Set the length of an array, without clearing or initializing the content.
+     *
+     * WARNING: This does not clear truncated elements or initialize newly exposed elements.
+     */
+    function unsafeSetLength(bytes32[] storage array, uint256 len) internal {
+        /// @solidity memory-safe-assembly
+        assembly {
+            sstore(array.slot, len)
+        }
+    }
+
+    /**
+     * @dev Set the length of an array, without clearing or initializing the content.
+     *
+     * WARNING: This does not clear truncated elements or initialize newly exposed elements.
+     */
+    function unsafeSetLength(uint256[] storage array, uint256 len) internal {
+        /// @solidity memory-safe-assembly
+        assembly {
+            sstore(array.slot, len)
+        }
+    }
 }

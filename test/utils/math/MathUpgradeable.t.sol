@@ -17,6 +17,10 @@ contract MathUpgradeableHarness {
         return MathUpgradeable.average(a, b);
     }
 
+    function ternary(bool condition, uint256 a, uint256 b) external pure returns (uint256) {
+        return MathUpgradeable.ternary(condition, a, b);
+    }
+
     function ceilDiv(uint256 a, uint256 b) external pure returns (uint256) {
         return MathUpgradeable.ceilDiv(a, b);
     }
@@ -67,6 +71,19 @@ contract MathUpgradeableTest is Test {
         assertEq(_math.average(57417, 95431), (57417 + 95431) / 2);
         assertEq(_math.average(42304, 84346), (42304 + 84346) / 2);
         assertEq(_math.average(type(uint256).max, type(uint256).max), type(uint256).max);
+    }
+
+    function testTernaryReturnsTrueBranch() public {
+        assertEq(_math.ternary(true, 11, 22), 11);
+    }
+
+    function testTernaryReturnsFalseBranch() public {
+        assertEq(_math.ternary(false, 11, 22), 22);
+    }
+
+    function testTernaryHandlesUint256Extremes() public {
+        assertEq(_math.ternary(true, type(uint256).max, 0), type(uint256).max);
+        assertEq(_math.ternary(false, type(uint256).max, 0), 0);
     }
 
     function testCeilDiv() public {

@@ -20,6 +20,14 @@ contract Uint256ArraysUpgradeableMock {
     function unsafeAccess(uint256 pos) external view returns (uint256) {
         return _array.unsafeAccess(pos).value;
     }
+
+    function unsafeSetLength(uint256 len) external {
+        _array.unsafeSetLength(len);
+    }
+
+    function length() external view returns (uint256) {
+        return _array.length;
+    }
 }
 
 contract AddressArraysUpgradeableMock {
@@ -34,6 +42,14 @@ contract AddressArraysUpgradeableMock {
     function unsafeAccess(uint256 pos) external view returns (address) {
         return _array.unsafeAccess(pos).value;
     }
+
+    function unsafeSetLength(uint256 len) external {
+        _array.unsafeSetLength(len);
+    }
+
+    function length() external view returns (uint256) {
+        return _array.length;
+    }
 }
 
 contract Bytes32ArraysUpgradeableMock {
@@ -47,6 +63,14 @@ contract Bytes32ArraysUpgradeableMock {
 
     function unsafeAccess(uint256 pos) external view returns (bytes32) {
         return _array.unsafeAccess(pos).value;
+    }
+
+    function unsafeSetLength(uint256 len) external {
+        _array.unsafeSetLength(len);
+    }
+
+    function length() external view returns (uint256) {
+        return _array.length;
     }
 }
 
@@ -157,6 +181,69 @@ contract ArraysUpgradeableTest is Test {
         for (uint256 i = 0; i < array.length; ++i) {
             assertEq(mock.unsafeAccess(i), array[i]);
         }
+    }
+
+    function testUnsafeSetLengthAddressArray() public {
+        address[] memory array = new address[](3);
+        for (uint256 i = 0; i < array.length; ++i) {
+            array[i] = address(uint176(uint256(keccak256(abi.encodePacked("addr", i)))));
+        }
+
+        AddressArraysUpgradeableMock mock = new AddressArraysUpgradeableMock(array);
+
+        mock.unsafeSetLength(1);
+        assertEq(mock.length(), 1);
+        assertEq(mock.unsafeAccess(0), array[0]);
+        assertEq(mock.unsafeAccess(1), array[1]);
+        assertEq(mock.unsafeAccess(2), array[2]);
+
+        mock.unsafeSetLength(3);
+        assertEq(mock.length(), 3);
+        assertEq(mock.unsafeAccess(0), array[0]);
+        assertEq(mock.unsafeAccess(1), array[1]);
+        assertEq(mock.unsafeAccess(2), array[2]);
+    }
+
+    function testUnsafeSetLengthBytes32Array() public {
+        bytes32[] memory array = new bytes32[](3);
+        for (uint256 i = 0; i < array.length; ++i) {
+            array[i] = keccak256(abi.encodePacked("bytes32", i));
+        }
+
+        Bytes32ArraysUpgradeableMock mock = new Bytes32ArraysUpgradeableMock(array);
+
+        mock.unsafeSetLength(1);
+        assertEq(mock.length(), 1);
+        assertEq(mock.unsafeAccess(0), array[0]);
+        assertEq(mock.unsafeAccess(1), array[1]);
+        assertEq(mock.unsafeAccess(2), array[2]);
+
+        mock.unsafeSetLength(3);
+        assertEq(mock.length(), 3);
+        assertEq(mock.unsafeAccess(0), array[0]);
+        assertEq(mock.unsafeAccess(1), array[1]);
+        assertEq(mock.unsafeAccess(2), array[2]);
+    }
+
+    function testUnsafeSetLengthUint256Array() public {
+        uint256[] memory array = new uint256[](3);
+        for (uint256 i = 0; i < array.length; ++i) {
+            array[i] = uint256(keccak256(abi.encodePacked("uint256", i)));
+        }
+
+        Uint256ArraysUpgradeableMock mock = new Uint256ArraysUpgradeableMock(array);
+
+        mock.unsafeSetLength(1);
+        assertEq(mock.length(), 1);
+        assertEq(mock.unsafeAccess(0), array[0]);
+        assertEq(mock.unsafeAccess(1), array[1]);
+        assertEq(mock.unsafeAccess(2), array[2]);
+
+        mock.unsafeSetLength(3);
+        assertEq(mock.length(), 3);
+        assertEq(mock.unsafeAccess(0), array[0]);
+        assertEq(mock.unsafeAccess(1), array[1]);
+        assertEq(mock.unsafeAccess(2), array[2]);
     }
 
     function _evenElementsArray() private pure returns (uint256[] memory array) {

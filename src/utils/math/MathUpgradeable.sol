@@ -37,6 +37,15 @@ library MathUpgradeable {
     }
 
     /**
+     * @dev Branchless ternary evaluation.
+     */
+    function ternary(bool condition, uint256 a, uint256 b) internal pure returns (uint256) {
+        unchecked {
+            return b ^ ((a ^ b) * (condition ? 1 : 0));
+        }
+    }
+
+    /**
      * @dev Returns the ceiling of the division of two numbers.
      *
      * This differs from standard division with `/` in that it rounds up instead
