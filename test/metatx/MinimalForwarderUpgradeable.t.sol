@@ -22,7 +22,7 @@ contract CallReceiverMockUpgradeable {
 
 contract MinimalForwarderUpgradeableTest is Test {
     bytes32 private constant _DOMAIN_TYPEHASH =
-        keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
+        keccak256("EIP712Domain(string name,string version,uint256 networkId,address verifyingContract)");
     bytes32 private constant _FORWARD_TYPEHASH =
         keccak256("ForwardRequest(address from,address to,uint256 value,uint256 gas,uint256 nonce,bytes data)");
 

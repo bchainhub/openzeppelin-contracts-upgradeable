@@ -20,7 +20,7 @@ interface IERC5267Upgradeable {
             bytes1 fields,
             string memory name,
             string memory version,
-            uint256 chainId,
+            uint256 networkId,
             address verifyingContract,
             bytes32 salt,
             uint256[] memory extensions

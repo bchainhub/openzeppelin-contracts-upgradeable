@@ -70,6 +70,10 @@ Cryptography differences vs Ethereum:
 - Typed-data hashing keeps EIP-712 construction: `keccak256("\x19\x01" || domainSeparator || structHash)`.
 - Tooling must produce 171-byte signatures, use the Core prefix, and verify via two-arg `ecrecover`.
 
+Foxar typed-data signing:
+- `foxar` / `shuttle` model typed-data domains as `CIP712Domain` / `EIP712Domain` with `networkId` and `verifyingContract`, not Ethereum `chainId`.
+- Existing `foxar` CLI and `shuttle` tests for typed data use payloads with `networkId`; if a contract expects typed signatures from foxar-native tooling, check domain compatibility before porting Ethereum `chainId`-based code unchanged.
+
 ERC1967 slot constants (keccak256 = SHA3-256, minus 1):
 - implementation: `0x169aa7877a62aec264f92a4c78812101abc42f65cbb20781a5cb4084c2d639d7`
 - admin: `0x5846d050da0e75d43b6055ae3cd6c2c65e1941ccb45afff84b891ff0c7a8e50e`

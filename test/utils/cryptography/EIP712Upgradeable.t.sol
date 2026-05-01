@@ -30,7 +30,7 @@ contract EIP712VerifierUpgradeableMock is EIP712Upgradeable {
 
 contract EIP712UpgradeableTest is Test {
     bytes32 private constant DOMAIN_TYPEHASH =
-        keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
+        keccak256("EIP712Domain(string name,string version,uint256 networkId,address verifyingContract)");
     bytes32 private constant MAIL_TYPEHASH = keccak256("Mail(address to,string contents)");
 
     string private constant SHORT_NAME = "A Name";
@@ -93,7 +93,7 @@ contract EIP712UpgradeableTest is Test {
             bytes1 fields,
             string memory reportedName,
             string memory reportedVersion,
-            uint256 chainId,
+            uint256 networkId,
             address verifyingContract,
             bytes32 salt,
             uint256[] memory extensions
@@ -102,7 +102,7 @@ contract EIP712UpgradeableTest is Test {
         assertEq(fields, hex"0f");
         assertEq(reportedName, name);
         assertEq(reportedVersion, version);
-        assertEq(chainId, block.chainid);
+        assertEq(networkId, block.chainid);
         assertEq(verifyingContract, address(eip712));
         assertEq(salt, bytes32(0));
         assertEq(extensions.length, 0);

@@ -34,7 +34,7 @@ import "../../proxy/utils/Initializable.sol";
  */
 abstract contract EIP712Upgradeable is Initializable, IERC5267Upgradeable {
     bytes32 private constant _TYPE_HASH =
-        keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
+        keccak256("EIP712Domain(string name,string version,uint256 networkId,address verifyingContract)");
 
     bytes32 private _hashedName;
     bytes32 private _hashedVersion;
@@ -88,7 +88,7 @@ abstract contract EIP712Upgradeable is Initializable, IERC5267Upgradeable {
             bytes1 fields,
             string memory name,
             string memory version,
-            uint256 chainId,
+            uint256 networkId,
             address verifyingContract,
             bytes32 salt,
             uint256[] memory extensions

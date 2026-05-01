@@ -159,7 +159,7 @@ contract CRC20PermitUpgradeableNoRevertMock is CRC20PermitUpgradeable {
 
 contract SafeCRC20UpgradeableTest is Test {
     bytes32 private constant DOMAIN_TYPEHASH =
-        keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
+        keccak256("EIP712Domain(string name,string version,uint256 networkId,address verifyingContract)");
     bytes32 private constant PERMIT_TYPEHASH =
         keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
 
