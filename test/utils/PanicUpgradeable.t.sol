@@ -108,7 +108,9 @@ contract PanicUpgradeableTest is Test {
     }
 
     function testArrayOutOfBoundsMatchesStandardPanicCode() public {
-        _assertPanic(address(_panicHarness), abi.encodeWithSelector(_panicHarness.triggerArrayOutOfBounds.selector), 0x32);
+        _assertPanic(
+            address(_panicHarness), abi.encodeWithSelector(_panicHarness.triggerArrayOutOfBounds.selector), 0x32
+        );
     }
 
     function testPortedPanicConstantsMatchExpectedCodes() public {
@@ -126,10 +128,14 @@ contract PanicUpgradeableTest is Test {
 
     function testPortedPanicLibraryUsesCorePanicSelector() public {
         _assertPanic(
-            address(_panicLibraryHarness), abi.encodeWithSelector(_panicLibraryHarness.panicWithCode.selector, 0x31), 0x31
+            address(_panicLibraryHarness),
+            abi.encodeWithSelector(_panicLibraryHarness.panicWithCode.selector, 0x31),
+            0x31
         );
         _assertPanic(
-            address(_panicLibraryHarness), abi.encodeWithSelector(_panicLibraryHarness.panicWithCode.selector, 0x12), 0x12
+            address(_panicLibraryHarness),
+            abi.encodeWithSelector(_panicLibraryHarness.panicWithCode.selector, 0x12),
+            0x12
         );
     }
 
