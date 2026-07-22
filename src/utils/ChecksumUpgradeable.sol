@@ -16,13 +16,14 @@ library ChecksumUpgradeable {
         }
     }
 
-    function isValid(address addr) internal pure returns (bool) {
+    function isValid(address addr) internal view returns (bool) {
         uint176 a = uint176(addr);
 
         uint8 prefix = uint8(a >> 168);
         uint8 checkBcd = uint8(a >> 160);
         uint160 raw = uint160(a);
 
+        if (prefix != _getChainPrefix()) return false;
         if ((checkBcd & 0x0f) > 9 || (checkBcd >> 4) > 9) return false;
 
         uint176 v = (uint176(raw) << 16) | (uint176(prefix) << 8) | uint176(checkBcd);

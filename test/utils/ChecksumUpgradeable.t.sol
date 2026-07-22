@@ -9,7 +9,7 @@ contract ChecksumUpgradeableHarness {
         return ChecksumUpgradeable.zeroAddress();
     }
 
-    function isValid(address addr) external pure returns (bool) {
+    function isValid(address addr) external view returns (bool) {
         return ChecksumUpgradeable.isValid(addr);
     }
 
@@ -31,6 +31,8 @@ contract ChecksumUpgradeableTest is Test {
         address expected = address(0xcb540000000000000000000000000000000000000000);
         assertEq(_harness.zeroAddress(), expected);
         assertEq(_harness.isValid(expected), true);
+        assertEq(_harness.isValid(address(0xab720000000000000000000000000000000000000000)), false);
+        assertEq(_harness.isValid(address(0xce450000000000000000000000000000000000000000)), false);
     }
 
     function testZeroAddressDevinChainId3() public {
@@ -38,6 +40,8 @@ contract ChecksumUpgradeableTest is Test {
         address expected = address(0xab720000000000000000000000000000000000000000);
         assertEq(_harness.zeroAddress(), expected);
         assertEq(_harness.isValid(expected), true);
+        assertEq(_harness.isValid(address(0xcb540000000000000000000000000000000000000000)), false);
+        assertEq(_harness.isValid(address(0xce450000000000000000000000000000000000000000)), false);
     }
 
     function testZeroAddressChainId57() public {
@@ -46,6 +50,8 @@ contract ChecksumUpgradeableTest is Test {
         address expected = address(0xce450000000000000000000000000000000000000000);
         assertEq(_harness.zeroAddress(), expected);
         assertEq(_harness.isValid(expected), true);
+        assertEq(_harness.isValid(address(0xcb540000000000000000000000000000000000000000)), false);
+        assertEq(_harness.isValid(address(0xab720000000000000000000000000000000000000000)), false);
     }
 
     function testPredefinedAddressChainId57() public {
